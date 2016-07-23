@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour {
 
     public int amountOfPlayers = 4;
 
+    public float worldSize = 10;
+
     private bool gameActive = false;
 
     void Awake()
