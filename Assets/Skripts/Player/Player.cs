@@ -7,7 +7,7 @@ public class Player : MonoBehaviour {
     private bool predator;
     private GameObject playerGraphic;
     private Collider coll;
-
+    private bool active = true;
 
     void Awake()
     {
@@ -32,10 +32,23 @@ public class Player : MonoBehaviour {
             CheckCollisionPlayer(other.gameObject);
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<Player>())
+            CheckTriggerPlayer(other.gameObject);
+    }
 
 
+    public void KillPlayer()
+    {
+
+    }
 
 
+    public bool IsActive()
+    {
+        return active;
+    }
 
     public void SetPredator(bool predator)
     {
@@ -71,7 +84,13 @@ public class Player : MonoBehaviour {
     private void CheckCollisionPlayer(GameObject other)
     {
         if (other.GetComponent<Player>().predator)
-            gameObject.SetActive(false);
+            active = false;
+    }
+
+    private void CheckTriggerPlayer(GameObject other)
+    {
+        if (!other.GetComponent<Player>().predator)
+            Debug.Log("quak");
     }
 
 }
