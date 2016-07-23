@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public enum PlayerNumber
 {
@@ -13,7 +12,12 @@ public enum PlayerNumber
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour {
 
-    public float movementFac, rotationFac;
+    public float predatorMovementFac, 
+        predatorRotationFac,
+        preyMovementFac, 
+        preyRotationFac;
+
+    private float movementFac, rotationFac;
 
     private Rigidbody rb;
     private Player p;
@@ -31,4 +35,17 @@ public class PlayerMovement : MonoBehaviour {
             rb.AddRelativeForce(new Vector3(0, 0, Input.GetAxis("Vertical_"+p.player))*movementFac);
         }
 	}
+
+
+    public void SetPredatorMovement()
+    {
+        movementFac = predatorMovementFac;
+        rotationFac = predatorRotationFac;
+    }
+
+    public void SetPreyMovement()
+    {
+        movementFac = preyMovementFac;
+        rotationFac = preyRotationFac;
+    }
 }

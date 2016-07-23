@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerPredator : MonoBehaviour {
 
-    public float attachReach = 1;
+    public float attackReach = 2;
 
     private Player p;
 
@@ -16,9 +16,8 @@ public class PlayerPredator : MonoBehaviour {
         if (!p)
             GetPlayer();
         if (Input.GetButtonDown("Action_" + p.player))
-        {
-            CheckRayForPrey(Physics.OverlapSphere(transform.position + transform.forward, attachReach, 1 << LayerMask.NameToLayer("Player")));
-        }
+            CheckRayForPrey(Physics.OverlapSphere(transform.position + transform.forward, attackReach, 1 << LayerMask.NameToLayer("Player")));
+        
 	}
 
     private void GetPlayer()
@@ -30,11 +29,10 @@ public class PlayerPredator : MonoBehaviour {
     {
         for (int i = 0; i < colliders.Length; i++)
         {
-            if (colliders[i].gameObject != transform.parent.gameObject)
+            if (colliders[i].gameObject != transform.gameObject)
             {
-                if (colliders[i].gameObject.GetComponent<Player>())
-                    colliders[i].gameObject.GetComponent<Player>().KillPlayer();
-
+                if (colliders[i].gameObject.GetComponentInParent<Player>())
+                    colliders[i].gameObject.GetComponentInParent<Player>().KillPlayer();
             }
         }
     }

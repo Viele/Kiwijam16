@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
 
     private bool predator;
     private GameObject playerGraphic;
-    private Collider coll;
+    private PlayerMovement mov;
     private bool active = true;
 
 
@@ -16,32 +16,31 @@ public class Player : MonoBehaviour {
     {
         EventManager.GameStart += GameStart;
         EventManager.GameEnd += GameEnd;
-        coll = GetComponent<Collider>();
+        mov = GetComponent<PlayerMovement>();
     }
 
     void GameStart()
     {
-        coll.enabled = true;
-        if(playerGraphic)
-            playerGraphic.SetActive(true);
         active = true;
     }
 
     void GameEnd(GameEndStates state)
     {
-        coll.enabled = false;
         Destroy(playerGraphic);
     }
 
 
 
 
+    public void Alert(Vector3 position)
+    {
+        playerUI.Alert(position);
+    }
 
     public void KillPlayer()
     {
         playerUI.KillPlayer();
-        coll.enabled = false;
-        playerGraphic.SetActive(false);
+        Destroy(playerGraphic);
         active = false;
         if (predator)
             GameManager.c.ReducePredatorCount();
@@ -63,6 +62,10 @@ public class Player : MonoBehaviour {
     public void SetPredator(bool predator)
     {
         this.predator = predator;
+        if (predator)
+            mov.SetPredatorMovement();
+        else
+            mov.SetPreyMovement();
     }
 
     public void SpawnPlayerGraphic()
@@ -84,10 +87,6 @@ public class Player : MonoBehaviour {
     {
         transform.position = position;
     }
-
-
-
-
 
 
 }

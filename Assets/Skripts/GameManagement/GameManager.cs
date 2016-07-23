@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+//TODO scale predator collider
+//TODO Audio manager
+//TODO bug where ducks win when not together
 public class GameManager : MonoBehaviour {
 
     public static GameManager c;
