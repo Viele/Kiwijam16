@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerManager : MonoBehaviour {
@@ -24,7 +23,6 @@ public class PlayerManager : MonoBehaviour {
         SpawnGraphics();
         PositionPlayers();
     }
-
 
 
 

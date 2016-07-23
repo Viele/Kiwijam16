@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour {
 
     public int amountOfPlayers = 4;
 
+    public GameObject worldEdge1, worldEdge2;
+
+
     private bool gameActive = false;
 
     void Awake()
@@ -40,6 +43,11 @@ public class GameManager : MonoBehaviour {
     public void TriggerGameStart()
     {
         EventManager.TriggerGameStart();
+    }
+
+    public float GetWorldSize()
+    {
+        return Vector3.Distance(worldEdge1.transform.position, worldEdge2.transform.position);
     }
 
 
