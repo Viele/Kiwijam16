@@ -26,6 +26,8 @@ public class PlayerManager : MonoBehaviour {
 
 
 
+
+
     private void DeterminePredator()
     {
         int predatorIndex = Random.Range(0, GameManager.c.amountOfPlayers);

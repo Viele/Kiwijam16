@@ -3,11 +3,14 @@
 public class Player : MonoBehaviour {
 
     public PlayerManager pManager;
+    public PlayerNumber player;
+    public PlayerUI playerUI;
 
     private bool predator;
     private GameObject playerGraphic;
     private Collider coll;
     private bool active = true;
+
 
     void Awake()
     {
@@ -19,35 +22,42 @@ public class Player : MonoBehaviour {
     void GameStart()
     {
         coll.enabled = true;
+        if(playerGraphic)
+            playerGraphic.SetActive(true);
+        active = true;
     }
 
     void GameEnd(GameEndStates state)
     {
         coll.enabled = false;
+        Destroy(playerGraphic);
     }
 
-    void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.GetComponent<Player>())
-            CheckCollisionPlayer(other.gameObject);
-    }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<Player>())
-            CheckTriggerPlayer(other.gameObject);
-    }
+
 
 
     public void KillPlayer()
     {
-
+        playerUI.KillPlayer();
+        coll.enabled = false;
+        playerGraphic.SetActive(false);
+        active = false;
+        if (predator)
+            GameManager.c.ReducePredatorCount();
+        else
+            GameManager.c.ReducePrayCount();
     }
 
 
     public bool IsActive()
     {
         return active;
+    }
+
+    public bool IsPredator()
+    {
+        return predator;
     }
 
     public void SetPredator(bool predator)
@@ -62,7 +72,7 @@ public class Player : MonoBehaviour {
         else
             playerGraphic = Instantiate(pManager.preyGraphic);
 
-        playerGraphic.transform.SetParent(gameObject.transform);
+        playerGraphic.transform.SetParent(gameObject.transform, false);
     }
 
     public void DeletePlayerGraphic()
@@ -79,18 +89,5 @@ public class Player : MonoBehaviour {
 
 
 
-
-
-    private void CheckCollisionPlayer(GameObject other)
-    {
-        if (other.GetComponent<Player>().predator)
-            active = false;
-    }
-
-    private void CheckTriggerPlayer(GameObject other)
-    {
-        if (!other.GetComponent<Player>().predator)
-            Debug.Log("quak");
-    }
 
 }

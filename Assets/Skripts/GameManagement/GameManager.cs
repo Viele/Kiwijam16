@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
@@ -10,7 +9,12 @@ public class GameManager : MonoBehaviour {
     public GameObject worldEdge1, worldEdge2;
 
 
+
+    private int livePrey = 4;
+
     private bool gameActive = false;
+
+
 
     void Awake()
     {
@@ -26,6 +30,7 @@ public class GameManager : MonoBehaviour {
     void GameStart()
     {
         gameActive = true;
+        livePrey = amountOfPlayers - 1;
     }
 
     void GameEnd(GameEndStates state)
@@ -34,6 +39,17 @@ public class GameManager : MonoBehaviour {
     }
 
 
+    public void ReducePrayCount()
+    {
+        livePrey--;
+        if (livePrey < 2)
+            EventManager.TriggerGameEnd(GameEndStates.PredatorWin);
+    }
+
+    public void ReducePredatorCount()
+    {
+        EventManager.TriggerGameEnd(GameEndStates.PreyWin);
+    }
 
     public bool IsGameActive()
     {
@@ -48,6 +64,12 @@ public class GameManager : MonoBehaviour {
     public float GetWorldSize()
     {
         return Vector3.Distance(worldEdge1.transform.position, worldEdge2.transform.position);
+    }
+
+    public void TryPrayWin(int preyFound)
+    {
+        if(preyFound == livePrey-1)
+            EventManager.TriggerGameEnd(GameEndStates.PreyWin);
     }
 
 
