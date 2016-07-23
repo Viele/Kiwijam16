@@ -31,8 +31,9 @@ public class PlayerPredator : MonoBehaviour {
         {
             if (colliders[i].gameObject != transform.gameObject)
             {
-                if (colliders[i].gameObject.GetComponentInParent<Player>())
+                if (colliders[i].gameObject.GetComponentInParent<Player>() && !colliders[i].isTrigger)
                     colliders[i].gameObject.GetComponentInParent<Player>().KillPlayer();
+                
             }
         }
     }

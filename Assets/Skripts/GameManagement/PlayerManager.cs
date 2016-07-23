@@ -58,7 +58,7 @@ public class PlayerManager : MonoBehaviour {
             } while (usedPositions.Contains(pos));
 
             usedPositions.Add(pos);
-            players[i].SetPosition(pos.transform.position);
+            players[i].PositionPlayer(pos.transform.position);
         }
     }
 }

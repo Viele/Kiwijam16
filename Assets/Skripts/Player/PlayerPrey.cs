@@ -3,6 +3,7 @@
 public class PlayerPrey : MonoBehaviour {
 
     public float alertDistance = 15;
+    public float meetupDistance = 3;
 
     private int preyFound = 0;
     private Player p;
@@ -24,21 +25,9 @@ public class PlayerPrey : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponentInParent<Player>())
-            CheckTriggerPlayer(other.gameObject);
+        CheckOverlapSphere(Physics.OverlapSphere(transform.position, meetupDistance, 1 << LayerMask.NameToLayer("Player")));
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponentInParent<Player>())
-        {
-            if(!other.GetComponentInParent<Player>().IsPredator())
-                preyFound--;
-
-            Debug.Log(preyFound);
-        }
-
-    }
 
     void GameStart()
     {
@@ -63,11 +52,22 @@ public class PlayerPrey : MonoBehaviour {
         }
     }
 
+    private void CheckOverlapSphere(Collider[] colliders)
+    {
+        int preyFound = 0;
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].gameObject != gameObject && !colliders[i].isTrigger)
+                preyFound++;
+        }
+        GameManager.c.TryPreyWin(preyFound);
+    }
+
     private void CheckTriggerPlayer(GameObject other)
     {
         if (!other.GetComponentInParent<Player>().IsPredator())
             preyFound++;
 
-        GameManager.c.TryPrayWin(preyFound);
+        GameManager.c.TryPreyWin(preyFound);
     }
 }

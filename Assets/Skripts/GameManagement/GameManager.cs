@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 
-//TODO scale predator collider
 //TODO Audio manager
-//TODO bug where ducks win when not together
 public class GameManager : MonoBehaviour {
 
     public static GameManager c;
@@ -13,7 +11,7 @@ public class GameManager : MonoBehaviour {
 
 
 
-    private int livePrey = 4;
+    private int livePrey = 3;
 
     private bool gameActive = false;
 
@@ -69,7 +67,7 @@ public class GameManager : MonoBehaviour {
         return Vector3.Distance(worldEdge1.transform.position, worldEdge2.transform.position);
     }
 
-    public void TryPrayWin(int preyFound)
+    public void TryPreyWin(int preyFound)
     {
         if(preyFound == livePrey-1)
             EventManager.TriggerGameEnd(GameEndStates.PreyWin);

@@ -83,9 +83,10 @@ public class Player : MonoBehaviour {
         Destroy(playerGraphic);
     }
 
-    public void SetPosition(Vector3 position)
+    public void PositionPlayer(Vector3 position)
     {
         transform.position = position;
+        transform.Rotate(0,Random.Range(0,360),0);
     }
 
 
