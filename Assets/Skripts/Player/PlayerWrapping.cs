@@ -5,10 +5,10 @@ public class PlayerWrapping : MonoBehaviour {
     private float edgeThreshold = 0.5f;
 
 	void Update () {
-        if (Mathf.Abs(transform.position.x) > GameManager.c.worldSize + edgeThreshold)
+        if (Mathf.Abs(transform.position.x) > GameManager.c.GetWorldSize()/2 + edgeThreshold)
             WrapPlayer(new Vector3(-1,1,1));
 
-        if (Mathf.Abs(transform.position.z) > GameManager.c.worldSize + edgeThreshold)
+        if (Mathf.Abs(transform.position.z) > GameManager.c.GetWorldSize()/2 + edgeThreshold)
             WrapPlayer(new Vector3(1,1,-1));
 	}
 
